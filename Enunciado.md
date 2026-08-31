@@ -178,7 +178,10 @@ estratificada por clase.
 ## Relación con el material del curso
 
 La semana 5 cubre exactamente esto: BOW y TF-IDF, embeddings, SVD y modelado de tópicos con sus
-métricas. Los documentos están en [`../Documentos/`](../Documentos/), prefijo `S05_`. La lectura
+métricas, y está resumida en
+[`../Resumenes/S05_Analisis_de_textos.md`](../Resumenes/S05_Analisis_de_textos.md), que es la
+teoría de este proyecto. Los documentos originales están en
+[`../Documentos/`](../Documentos/), prefijo `S05_`. La lectura
 del capítulo 8 de Raschka (*Applying Machine Learning to Sentiment Analysis*) hace este mismo
 recorrido sobre reseñas de IMDb, incluida la comparación entre LSA por SVD y LDA probabilístico,
 y el libro está en [`../Libros/`](../Libros/README.md).

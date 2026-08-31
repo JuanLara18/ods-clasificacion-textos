@@ -64,7 +64,23 @@ La línea base obligatoria antes de cualquier comparación: TF-IDF más regresi�
 reducción**. Si la SVD no se le acerca, hay que decirlo en el notebook y explicar por qué se
 aplica igual, que es lo que pide la rúbrica.
 
+## 5. Cómo se reporta el desempeño
+
+**Abierta, y es la decisión propia del proyecto.** La exactitud castiga igual cualquier error, y
+[`estrategia.md`](estrategia.md) muestra que en este problema los errores tienen estructura: el
+62% de ellos tienen el ODS correcto en segunda posición y un tercio son empates técnicos. Lo que
+hay que decidir es qué se reporta además del F1 macro: costo del error según las cinco P, top-2,
+o una regla de abstención para los textos transversales. Las tres ideas están argumentadas en la
+sección 6 de ese documento.
+
 ## Bitácora
+
+**31 de agosto de 2026, tarde.** Investigación previa al método, en
+[`estrategia.md`](estrategia.md). Tres hallazgos: la línea base TF-IDF más logística ya da 0,8886
+de exactitud y 0,8659 de F1 macro; los errores del modelo agrupan los ODS en bloques que
+coinciden con las taxonomías oficiales de la Agenda 2030; y el OSDG documenta que **a los
+anotadores nunca se les permitió asignar más de un ODS por texto**, de modo que la monoetiqueta
+es una restricción del procedimiento y no un hecho de los datos.
 
 **31 de agosto de 2026.** Se monta el repositorio y se perfila el corpus. Tres hallazgos que
 condicionan el diseño y que ya están en `Enunciado.md`: son 16 clases y no 17, el desbalance es

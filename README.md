@@ -87,9 +87,18 @@ Proyecto2/
 └── requirements.txt
 ```
 
+## La investigación previa
+
+Antes de escribir el método medimos qué tipo de problema es este, y el resultado cambia lo que
+hay que reportar: **la etiqueta única no es una propiedad de los textos sino del procedimiento
+con que los anotaron**, y los errores del clasificador reproducen la estructura temática de la
+Agenda 2030. El argumento completo, con la evidencia, está en
+[`docs/estrategia.md`](docs/estrategia.md), y la figura en
+[`results/estructura_de_los_errores.png`](results/estructura_de_los_errores.png).
+
 ## Estado
 
-Andamiaje montado y corpus perfilado. Falta todo el método: el notebook aún no existe. El primer
+Andamiaje montado, corpus perfilado y estrategia investigada. Falta todo el método: el notebook aún no existe. El primer
 paso es fijar la línea base, TF-IDF más un clasificador lineal sin reducción, para tener contra
 qué comparar lo que salga después de la SVD, porque proyectar a 20 componentes desde un
 vocabulario de decenas de miles pierde información y hay que poder medir cuánta.
