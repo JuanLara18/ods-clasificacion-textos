@@ -146,7 +146,7 @@ fallos. Y la confianza acompaña:
 | Cuando falla | 0,433 |
 
 En los fallos, la diferencia media entre la probabilidad de la clase elegida y la de la correcta
-es de 0,29, y en **331 de los 1.076 fallos esa diferencia es menor que 0,10**: un empate técnico.
+es de 0,29, y en **333 de los 1.076 fallos esa diferencia es menor que 0,10**: un empate técnico.
 El modelo no se equivoca con seguridad, se equivoca dudando. Un tercio de sus errores son casos en
 los que dos objetivos le parecían casi igual de plausibles, que es precisamente lo que pasa cuando
 el texto habla de los dos.
