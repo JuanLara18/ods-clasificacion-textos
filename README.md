@@ -72,8 +72,11 @@ El entorno del bimestre (`C:\Users\LaraJ\Envs\miad-2026-14`) ya tiene todo; para
 
 ```
 Proyecto2/
-├── Enunciado.md                     enunciado del curso, con las notas de lectura
+├── Enunciado.md                     el enunciado del curso, con las notas de lectura del corpus
 ├── AGENTS.md                        cómo se trabaja aquí, humano o agente
+├── docs/
+│   ├── estrategia.md                la investigación previa: qué tipo de problema es este
+│   └── decisiones.md                las cinco decisiones abiertas, con su argumento
 ├── data/
 │   └── Train_textosODS.xlsx         9.656 textos etiquetados con su ODS
 ├── notebooks/
@@ -81,24 +84,49 @@ Proyecto2/
 ├── scripts/
 │   ├── perfilar_corpus.py           clases, desbalance, longitudes, casi duplicados
 │   └── exportar_entrega.py          deja el .ipynb y el .html listos para Coursera
-├── docs/
-│   └── decisiones.md                las decisiones cerradas, su argumento y la bitácora
 ├── results/
+│   └── estructura_de_los_errores.png
 └── requirements.txt
 ```
 
+**Por dónde entrar.** Primero [`docs/estrategia.md`](docs/estrategia.md), que es lo que cambia
+cómo se aborda el problema; después [`Enunciado.md`](Enunciado.md), por la rúbrica y por lo que es
+fácil perder de ella; y con eso, el notebook.
+
 ## La investigación previa
 
-Antes de escribir el método medimos qué tipo de problema es este, y el resultado cambia lo que
-hay que reportar: **la etiqueta única no es una propiedad de los textos sino del procedimiento
-con que los anotaron**, y los errores del clasificador reproducen la estructura temática de la
-Agenda 2030. El argumento completo, con la evidencia, está en
+Antes de escribir el método medimos qué tipo de problema es este, y el resultado cambia lo que hay
+que reportar: **la etiqueta única no es una propiedad de los textos sino del procedimiento con que
+los anotaron**, y los errores del clasificador reproducen la estructura temática de la Agenda
+2030. El argumento completo, con la evidencia, está en
 [`docs/estrategia.md`](docs/estrategia.md), y la figura en
 [`results/estructura_de_los_errores.png`](results/estructura_de_los_errores.png).
 
+## El notebook
+
+Está **armado y vacío**. Trae las secciones en el orden de los criterios de evaluación, y cada una
+dice qué se califica ahí, con qué peso y qué decisión de
+[`docs/decisiones.md`](docs/decisiones.md) le corresponde.
+
+| Sección | Qué construye | Peso | Estado |
+|---|---|---|---|
+| 1 | Los datos: carga, distribución de clases, partición estratificada | | **corre** |
+| 2 | Preparación de los textos y pipeline | 30% + 15% | vacía |
+| 3 | LSA: tópicos e interpretación frente a los ODS | 15% | vacía |
+| 4 | Clasificación con búsqueda de hiperparámetros | 30% | vacía |
+| 5 | Desempeño sobre textos no vistos | 10% | vacía |
+| 6 | Conclusiones | | vacía |
+
+Cierra con una lista de verificación de la rúbrica, para pasarla antes de exportar. Se guarda
+**sin salidas** mientras se desarrolla, según [`AGENTS.md`](AGENTS.md); solo la corrida final va
+con todas las celdas ejecutadas, porque el enunciado lo exige.
+
 ## Estado
 
-Andamiaje montado, corpus perfilado y estrategia investigada. Falta todo el método: el notebook aún no existe. El primer
-paso es fijar la línea base, TF-IDF más un clasificador lineal sin reducción, para tener contra
-qué comparar lo que salga después de la SVD, porque proyectar a 20 componentes desde un
-vocabulario de decenas de miles pierde información y hay que poder medir cuánta.
+Repositorio montado, corpus perfilado, estrategia investigada y notebook esqueleto listo. Falta el
+método.
+
+El primer paso es la **línea base**: TF-IDF más un clasificador lineal sin reducción, para tener
+contra qué comparar lo que salga después de la SVD. Ese número ya está medido en la investigación
+previa, **0,8886 de exactitud y 0,8659 de F1 macro**, así que el trabajo es reproducirlo dentro
+del pipeline y dejarlo escrito como referencia.
