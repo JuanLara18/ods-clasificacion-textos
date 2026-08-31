@@ -1,0 +1,25 @@
+# Micro proyecto 2: clasificación de textos según los ODS
+#
+# Versiones congeladas del entorno del bimestre 2026-14, que vive fuera del Drive:
+#   C:\Users\LaraJ\Envs\miad-2026-14   (kernel "MIAD 2026-14 (Python 3.12)")
+#
+# Para montar un entorno solo para este proyecto:
+#   uv venv .venv --python 3.12
+#   uv pip install -r requirements.txt
+#   python -m ipykernel install --user --name ods --display-name "ODS (Python 3.12)"
+
+numpy==2.5.1
+pandas==3.0.5
+scipy==1.18.0
+scikit-learn==1.9.0     # TfidfVectorizer, TruncatedSVD, Pipeline, GridSearchCV, clasificadores
+matplotlib==3.11.1
+openpyxl==3.1.5         # pandas lo necesita para leer el .xlsx del corpus
+
+# Notebook y exportación de la entrega
+ipykernel==7.3.0
+jupyterlab==4.6.2
+nbconvert==7.17.1
+
+# Opcional: la bonificación de 15 puntos del enunciado. No lo tiene el entorno del bimestre,
+# se instala solo si se hace la app.
+# streamlit

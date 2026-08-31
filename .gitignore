@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+.DS_Store
+*.log
+.claude/
+
+# Copias derivadas del notebook, se regeneran con scripts/exportar_entrega.py
+entrega/
+
+# Material del curso y logística interna, viven en el Drive
+Enunciado.pdf
+Enunciado_notas.pdf
+docs/plan.md
+
+# PDF generados con md2pdf.py desde el .md hermano
+docs/*.pdf
