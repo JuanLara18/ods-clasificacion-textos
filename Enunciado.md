@@ -1,8 +1,11 @@
 # Micro proyecto 2: Alcanzando los objetivos de desarrollo sostenible
 
-**Curso:** ML No Supervisado (2026-14) · **Fuente:** `Enunciado.pdf`
-**Publicado:** semana 5 · **Entrega: domingo 20 de septiembre de 2026, 11:59 PM (-05)**
-**Peso:** 22,5% de la nota del curso · **Grupal** (*Graded Team Assignment* en Coursera)
+**Curso:** ML No Supervisado (2026-14)
+**Fuente:** `Enunciado.pdf`
+**Publicado:** semana 5
+**Entrega: domingo 20 de septiembre de 2026, 11:59 PM (-05)**
+**Peso:** 22,5% de la nota del curso
+**Grupal** (*Graded Team Assignment* en Coursera)
 
 El enunciado solo dice "al final de la semana 7". La fecha viene del gradebook de Coursera,
 verificado el 17 de agosto de 2026 y registrado en
