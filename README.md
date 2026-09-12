@@ -61,6 +61,7 @@ producto de la aumentación con ChatGPT y no encuentra ninguna sobre una muestra
 
 ```bash
 python scripts/perfilar_corpus.py          # qué trae el corpus, antes de decidir nada
+python scripts/barrer_preparacion.py       # qué decisiones de preparación importan (ninguna)
 jupyter lab notebooks/Microproyecto_2.ipynb
 python scripts/exportar_entrega.py         # deja el .ipynb y el .html en entrega/
 ```
@@ -76,13 +77,14 @@ Proyecto2/
 ├── AGENTS.md                        cómo se trabaja aquí, humano o agente
 ├── docs/
 │   ├── estrategia.md                la investigación previa: qué tipo de problema es este
-│   └── decisiones.md                las cinco decisiones abiertas, con su argumento
+│   └── decisiones.md                las cinco decisiones del método, con su argumento y su cierre
 ├── data/
 │   └── Train_textosODS.xlsx         9.656 textos etiquetados con su ODS
 ├── notebooks/
 │   └── Microproyecto_2.ipynb        el entregable, autocontenido
 ├── scripts/
 │   ├── perfilar_corpus.py           clases, desbalance, longitudes, casi duplicados
+│   ├── barrer_preparacion.py        cuánto cambia el desempeño con cada decisión de preparación
 │   └── exportar_entrega.py          deja el .ipynb y el .html listos para Coursera
 ├── results/
 │   └── estructura_de_los_errores.png
@@ -104,29 +106,68 @@ los anotaron**, y los errores del clasificador reproducen la estructura temátic
 
 ## El notebook
 
-Está **armado y vacío**. Trae las secciones en el orden de los criterios de evaluación, y cada una
-dice qué se califica ahí, con qué peso y qué decisión de
-[`docs/decisiones.md`](docs/decisiones.md) le corresponde.
+Las secciones van en el orden de los criterios de evaluación, y cada una dice qué se califica
+ahí y con qué peso. El notebook no nombra este repositorio ni sus rutas: el calificador recibe
+dos archivos y no la carpeta.
 
 | Sección | Qué construye | Peso | Estado |
 |---|---|---|---|
 | 1 | Los datos: carga, distribución de clases, partición estratificada | | **corre** |
-| 2 | Preparación de los textos y pipeline | 30% + 15% | vacía |
-| 3 | LSA: tópicos e interpretación frente a los ODS | 15% | vacía |
-| 4 | Clasificación con búsqueda de hiperparámetros | 30% | vacía |
-| 5 | Desempeño sobre textos no vistos | 10% | vacía |
-| 6 | Conclusiones | | vacía |
+| 2 | Preparación de los textos y pipeline | 30% + 15% | **corre** |
+| 3 | LSA: tópicos e interpretación frente a los ODS | 15% | **corre** |
+| 4 | Clasificación con búsqueda de hiperparámetros | 30% | **corre** |
+| 5 | Desempeño sobre textos no vistos | 10% | **corre** |
+| 6 | Conclusiones | | **corre** |
 
-Cierra con una lista de verificación de la rúbrica, para pasarla antes de exportar. Se guarda
-**sin salidas** mientras se desarrolla, según [`AGENTS.md`](AGENTS.md); solo la corrida final va
-con todas las celdas ejecutadas, porque el enunciado lo exige.
+Se guarda **sin salidas** mientras se desarrolla, según [`AGENTS.md`](AGENTS.md); solo la corrida
+final va con todas las celdas ejecutadas, porque el enunciado lo exige. Correrlo completo toma
+unos seis minutos, casi todos en la búsqueda de hiperparámetros de la sección 4.2.
+
+### Antes de entregar
+
+Esta lista vivía al final del notebook y se movió aquí: es control nuestro, no parte de lo que
+lee el calificador. Los nueve puntos están verificados al 12 de septiembre de 2026.
+
+- [x] El notebook corre de punta a punta, en orden, sin errores
+- [x] Cada decisión tiene su justificación escrita al lado, no solo el código
+- [x] El pipeline es un objeto de scikit-learn y procesa un texto nuevo de principio a fin
+- [x] Hay búsqueda de hiperparámetros, y se dice por qué ese espacio y esa métrica
+- [x] Se interpretan al menos cinco componentes frente a los ODS
+- [x] Se muestran al menos cuatro textos de prueba clasificados (son seis)
+- [x] Se dice que son 16 clases y no 17, y por qué
+- [x] Se declara que el corpus está traducido automáticamente y aumentado
+- [ ] Todas las celdas quedan con su salida visible, que es cosa de la exportación final
 
 ## Estado
 
-Repositorio montado, corpus perfilado, estrategia investigada y notebook esqueleto listo. Falta el
-método.
+**12 de septiembre de 2026. El método está completo y el notebook corre de punta a punta.** Las
+cinco decisiones están cerradas en [`docs/decisiones.md`](docs/decisiones.md).
 
-El primer paso es la **línea base**: TF-IDF más un clasificador lineal sin reducción, para tener
-contra qué comparar lo que salga después de la SVD. Ese número ya está medido en la investigación
-previa, **0,8886 de exactitud y 0,8659 de F1 macro**, así que el trabajo es reproducirlo dentro
-del pipeline y dejarlo escrito como referencia.
+El modelo final es TF-IDF con 8.353 términos, SVD truncada a 500 componentes, normalización de
+las filas y regresión logística con `C = 3`. Sobre los **1.932 textos de prueba que nunca vio**
+alcanza:
+
+| | |
+|---|---|
+| Exactitud | **0,8758** |
+| F1 macro | **0,8478** |
+| Exactitud top-2 | **0,9482** |
+
+Cuatro resultados que conviene conocer antes de leer el notebook:
+
+1. **Veinte componentes no bastan.** El rango que sugiere el enunciado da 0,755 de F1 macro
+   contra 0,850 sin reducir, y hacen falta quinientas para empatar. Van dos descomposiciones,
+   veinte para los tópicos y quinientas para clasificar, que el enunciado autoriza.
+2. **La SVD no mejora el desempeño, lo iguala.** Se justifica por lo que habilita, un modelo
+   dieciséis veces más pequeño y las componentes interpretables, no por lo que mejora.
+3. **Ninguna decisión de preparación del texto importa.** Todas las configuraciones medidas
+   caben en menos de una centésima de F1 macro, por debajo del ruido entre particiones, así que
+   se escogieron por el tamaño del vocabulario. Las mediciones están en
+   [`scripts/barrer_preparacion.py`](scripts/barrer_preparacion.py).
+4. **Los errores son dudas, no disparates.** De los 240 errores, en 140 el ODS correcto quedó
+   segundo, y la confianza media cae de 0,872 cuando acierta a 0,532 cuando falla. La estructura
+   de las confusiones sobre datos no vistos replica la que
+   [`docs/estrategia.md`](docs/estrategia.md) había hallado antes de escribir el método.
+
+Lo único pendiente es la **app de Streamlit** de los 15 puntos opcionales, que ahora sí es media
+tarde de trabajo porque el pipeline está cerrado y el modelo se serializa con `joblib.dump`.
