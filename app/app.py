@@ -3,9 +3,9 @@
 
     streamlit run app/app.py
 
-Usa el mismo pipeline del notebook, definido en modelo.py. Muestra los dos objetivos más
-probables y no solo el primero, porque muchos textos tocan varios a la vez: es la conclusión
-del proyecto llevada a la interfaz.
+Usa el mismo pipeline del notebook, definido en modelo.py. El segundo objetivo se propone solo
+cuando es plausible, y los dos se muestran juntos cuando quedan empatados: muchos textos tocan
+varios objetivos, y eso es lo que el proyecto encontró que la etiqueta única esconde.
 """
 
 import sys
@@ -29,7 +29,10 @@ EJEMPLO = (
     "de distribución."
 )
 
+# Bajo este margen entre el primero y el segundo, el texto se declara transversal.
 MARGEN_ESTRECHO = 0.10
+# Bajo esta probabilidad el segundo objetivo no aporta nada, y mostrarlo resta credibilidad.
+UMBRAL_SEGUNDO = 0.10
 PALABRAS_MINIMAS = 20
 
 
@@ -51,30 +54,18 @@ def poner_ejemplo() -> None:
 def barra_lateral() -> None:
     with st.sidebar:
         st.subheader("El modelo")
-        st.write(
-            "Bolsa de palabras con pesado TF-IDF sobre 8.353 términos, SVD truncada a 500 "
-            "componentes, normalización de las filas y regresión logística."
-        )
-        izquierda, centro, derecha = st.columns(3)
-        izquierda.metric("Exactitud", "0,876")
-        centro.metric("F1 macro", "0,848")
-        derecha.metric("Top 2", "0,948")
-        st.caption(
-            "Medido con este mismo pipeline entrenado sobre el 80% del corpus y evaluado "
-            "sobre el 20% restante. El modelo que responde aquí se entrenó con el corpus "
-            "completo, así que vio más textos que el que se midió."
-        )
+        st.write("TF-IDF, SVD truncada a 500 componentes y regresión logística.")
+
+        exactitud, f1, top2 = st.columns(3)
+        exactitud.metric("Exactitud", "0,876")
+        f1.metric("F1 macro", "0,848")
+        top2.metric("Top 2", "0,948")
+        st.caption("Medido sobre 1.932 textos no vistos. El modelo que responde aquí se "
+                   "entrenó después con el corpus completo.")
 
         st.divider()
-        st.subheader("Lo que conviene saber")
-        st.write(
-            "**Son 16 objetivos y no 17.** El ODS 17, alianzas para lograr los objetivos, no "
-            "aparece en el corpus de entrenamiento, así que el sistema no lo puede proponer."
-        )
-        st.write(
-            "**Muchos textos tocan varios objetivos.** Por eso se muestran los dos más "
-            "probables, y no solo el primero."
-        )
+        st.caption("Son 16 objetivos y no 17: el ODS 17 no aparece en el corpus, así que el "
+                   "sistema nunca lo propone.")
 
 
 def mostrar_resultado(texto: str, modelo) -> None:
@@ -86,24 +77,24 @@ def mostrar_resultado(texto: str, modelo) -> None:
     p_primero, p_segundo = probabilidades[orden[0]], probabilidades[orden[1]]
 
     with st.container(border=True):
-        objetivo, probabilidad = st.columns([3, 1])
-        objetivo.markdown(f"### ODS {primero}")
-        objetivo.markdown(f"**{NOMBRES_ODS[primero]}**")
+        objetivo, probabilidad = st.columns([3, 1], vertical_alignment="center")
+        objetivo.caption(f"ODS {primero}")
+        objetivo.markdown(f"### {NOMBRES_ODS[primero]}")
         probabilidad.metric("Probabilidad", porcentaje(p_primero))
-
-    st.markdown(
-        f"**Segunda opción:** ODS {segundo}, {NOMBRES_ODS[segundo]} "
-        f"({porcentaje(p_segundo)})"
-    )
 
     if p_primero - p_segundo < MARGEN_ESTRECHO:
         st.info(
-            "Los dos primeros objetivos están casi empatados, así que conviene leer el texto "
-            "como **transversal** a ambos. En la evaluación, los textos con este margen fueron "
-            "el 6% del total y concentraron el 31% de los errores."
+            f"**Texto transversal.** El ODS {primero} y el ODS {segundo}, "
+            f"{NOMBRES_ODS[segundo].lower()}, quedan casi empatados "
+            f"({porcentaje(p_primero)} y {porcentaje(p_segundo)}). Conviene considerar los dos."
+        )
+    elif p_segundo >= UMBRAL_SEGUNDO:
+        st.caption(
+            f"También podría ser ODS {segundo}, {NOMBRES_ODS[segundo].lower()} "
+            f"({porcentaje(p_segundo)})."
         )
 
-    with st.expander("Ver los cinco objetivos más probables"):
+    with st.expander("Los cinco más probables"):
         for posicion in orden[:5]:
             ods = clases[posicion]
             st.progress(
@@ -113,26 +104,25 @@ def mostrar_resultado(texto: str, modelo) -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="Clasificador de textos según los ODS", layout="centered")
+    st.set_page_config(page_title="Clasificador de textos ODS", layout="centered")
     barra_lateral()
 
-    st.title("Clasificador de textos según los ODS")
-    st.write(
-        "Escriba o pegue un párrafo en español y el sistema dice con cuál de los Objetivos de "
-        "Desarrollo Sostenible de la Agenda 2030 se relaciona."
-    )
+    st.title("Clasificador de textos ODS")
+    st.caption("Relaciona un párrafo en español con uno de los 16 Objetivos de Desarrollo "
+               "Sostenible de la Agenda 2030.")
 
     st.text_area(
         "Texto",
         key="texto",
-        height=200,
-        placeholder="Por ejemplo, un fragmento de un plan de desarrollo territorial, "
-                    "un informe de política pública o una propuesta ciudadana.",
+        height=180,
+        label_visibility="collapsed",
+        placeholder="Pegue aquí un párrafo: un fragmento de un plan de desarrollo, un informe "
+                    "de política pública o una propuesta ciudadana.",
     )
 
-    clasificar, ejemplo = st.columns([1, 1])
+    clasificar, ejemplo, _ = st.columns([1, 1, 2])
     pulsado = clasificar.button("Clasificar", type="primary", width="stretch")
-    ejemplo.button("Cargar un ejemplo", on_click=poner_ejemplo, width="stretch")
+    ejemplo.button("Ejemplo", on_click=poner_ejemplo, width="stretch")
 
     if not pulsado:
         return
@@ -144,9 +134,8 @@ def main() -> None:
 
     if len(texto.split()) < PALABRAS_MINIMAS:
         st.warning(
-            f"El texto tiene menos de {PALABRAS_MINIMAS} palabras. El modelo aprendió de "
-            "párrafos de unas 105 palabras, así que con textos muy cortos la predicción es "
-            "poco confiable."
+            f"Con menos de {PALABRAS_MINIMAS} palabras la predicción es poco confiable: el "
+            "modelo aprendió de párrafos de unas 105."
         )
 
     mostrar_resultado(texto, obtener_modelo())
