@@ -75,9 +75,9 @@ BASE = dict(
 # Un factor a la vez desde BASE. La etiqueta dice qué decisión se está midiendo.
 FACTORES = [
     ("base", {}),
-    ("sin quitar palabras vacias", dict(stop_words=None)),
+    ("sin quitar palabras vacías", dict(stop_words=None)),
     ("conservando las tildes", dict(strip_accents=None)),
-    ("conservando los numeros", dict(token_pattern=TOKEN_CON_NUMEROS)),
+    ("conservando los números", dict(token_pattern=TOKEN_CON_NUMEROS)),
     ("con bigramas", dict(ngram_range=(1, 2))),
     ("min_df = 1", dict(min_df=1)),
     ("min_df = 3", dict(min_df=3)),
@@ -95,7 +95,7 @@ REJILLA = [
     ("bigramas + min_df = 3", dict(ngram_range=(1, 2), min_df=3)),
     ("bigramas + sublinear_tf + min_df = 3",
      dict(ngram_range=(1, 2), sublinear_tf=True, min_df=3)),
-    ("sublinear_tf + numeros", dict(sublinear_tf=True, token_pattern=TOKEN_CON_NUMEROS)),
+    ("sublinear_tf + números", dict(sublinear_tf=True, token_pattern=TOKEN_CON_NUMEROS)),
     ("sublinear_tf + min_df = 1", dict(sublinear_tf=True, min_df=1)),
 ]
 
@@ -129,7 +129,7 @@ def medir(X, y, **cambios) -> tuple[float, float, int, float]:
 
 def imprimir_tabla(titulo: str, filas: list, referencia: float) -> None:
     print(f"\n{titulo}")
-    print(f"  {'configuracion':<38} {'F1 macro':>9} {'exactitud':>10} "
+    print(f"  {'configuración':<38} {'F1 macro':>9} {'exactitud':>10} "
           f"{'vocab':>8} {'vs base':>9}")
     for etiqueta, f1, exactitud, vocabulario, _ in filas:
         print(f"  {etiqueta:<38} {f1:>9.4f} {exactitud:>10.4f} "
@@ -144,7 +144,7 @@ def main() -> int:
         test_size=0.2, stratify=corpus["ODS"], random_state=SEMILLA,
     )
     print(f"{len(X_train)} textos de entrenamiento, {y_train.nunique()} clases")
-    print("instrumento de medida: regresion logistica, validacion cruzada estratificada de 5")
+    print("instrumento de medida: regresión logística, validación cruzada estratificada de 5")
     print()
 
     filas = []
@@ -153,7 +153,7 @@ def main() -> int:
         filas.append((etiqueta, f1, exactitud, vocabulario, segundos))
         print(f"  {etiqueta:<38} F1 {f1:.4f}  ({segundos:.0f}s)")
     referencia = filas[0][1]
-    imprimir_tabla("un factor a la vez, desde la configuracion base", filas, referencia)
+    imprimir_tabla("un factor a la vez, desde la configuración base", filas, referencia)
 
     if not argumentos.rapido:
         print()
@@ -167,7 +167,7 @@ def main() -> int:
 
     mejor = max(filas, key=lambda fila: fila[1])
     print(f"\nmejor: {mejor[0]}  F1 macro {mejor[1]:.4f}  exactitud {mejor[2]:.4f}")
-    print("La configuracion que se lleve al notebook se escribe en docs/decisiones.md.")
+    print("La configuración que se lleve al notebook se escribe en docs/decisiones.md.")
     return 0
 
 
