@@ -1,7 +1,14 @@
 # Cómo atacar el problema
 
 Lo que encontramos midiendo, sobre los 9.656 textos del corpus, antes de escribir una línea del
-método. La conclusión corta:
+método.
+
+> **Este documento es del 31 de agosto de 2026 y se deja como quedó**, con sus predicciones
+> acierten o no. Lo que finalmente se hizo, y cómo salió, está en
+> [`decisiones.md`](decisiones.md). La única predicción que no se cumplió está anotada en la
+> idea 4.
+
+La conclusión corta:
 
 > **El enunciado plantea un problema de 16 clases excluyentes, y los datos no lo son.** La
 > etiqueta única no es una propiedad de los textos, es una restricción del procedimiento con que
@@ -207,6 +214,14 @@ mirar qué agrupa cada una.
 
 **Cuesta:** nada extra, es la actividad 2 del enunciado bien hecha. **Aporta:** el 15% con un
 argumento propio en vez de una lista de palabras comentada.
+
+> **Medido el 12 de septiembre de 2026, y la predicción falló a favor nuestro.** Sí hay
+> componentes que corresponden a un ODS único, y son cinco: la 2 al ODS 16, la 3 al ODS 4, la 5
+> al ODS 3, la 6 al ODS 6 y la 7 al ODS 7. Lo que sí se cumplió es lo demás: la componente 1, la
+> primera que discrimina algo, es el eje de asuntos humanos contra sistemas técnicos y
+> ambientales, es decir la partición mayor de la estructura de la sección 3, recuperada por esta
+> segunda vía. Y las veinte componentes tocan los dieciséis objetivos sin separarlos, que es lo
+> que justifica usar una descomposición para interpretar y otra para clasificar.
 
 ### Idea 5. Recuperar el `agreement` perdido
 
