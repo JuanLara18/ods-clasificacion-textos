@@ -171,6 +171,27 @@ investigación previa se sostienen fuera de la muestra con que se hallaron.
 
 ## Bitácora
 
+**14 de septiembre de 2026.** Se hace la aplicación de Streamlit, los 15 puntos opcionales, en
+`app/`. Recibe texto libre, lo procesa con el mismo pipeline y devuelve el ODS con su
+probabilidad. Además propone siempre el segundo objetivo más probable y marca como transversal
+el texto cuyos dos primeros quedan a menos de 0,10, que es la conclusión del proyecto llevada a
+la interfaz.
+
+Tres decisiones de ingeniería. El modelo entrenado pesa 37 MB y entrenarlo toma unos minutos, así
+que no se versiona ni se guarda en el Drive: queda en la caché local junto a la de las demás
+herramientas del bimestre, y la aplicación lo carga en 0,3 segundos. Entrena sobre el corpus
+completo y no sobre el 80%, porque aquí se sirve y no se mide, y la barra lateral dice
+explícitamente que las métricas que muestra vienen de la evaluación con partición y no de este
+modelo. Y el pipeline está definido en `app/modelo.py` y otra vez en el notebook, por la regla de
+siempre: el notebook no puede importar nada del repositorio.
+
+Las cinco rutas de la interfaz quedaron probadas sin navegador con `streamlit.testing`: arranque,
+clasificar en vacío, el ejemplo, el aviso de texto corto y el de texto transversal. **El ejemplo
+que traía la aplicación al principio clasificaba mal**, un párrafo sobre acueducto rural que el
+modelo mandaba a ODS 3 salud con 50,9% en vez de ODS 6. Se cambió por uno de saneamiento básico,
+que sale ODS 6 con 99,8%. La confusión era legítima, calidad del agua lleva a salud, pero como
+ejemplo de bienvenida no servía.
+
 **12 de septiembre de 2026, noche.** Secciones 4, 5 y 6 escritas, decisiones 4 y 5 cerradas y el
 método completo. El notebook corre de punta a punta y el modelo final da **0,8758 de exactitud y
 0,8478 de F1 macro** sobre los 1.932 textos de prueba, con 0,9482 de top-2.

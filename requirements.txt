@@ -20,8 +20,7 @@ ipykernel==7.3.0
 jupyterlab==4.6.2
 nbconvert==7.17.1
 
-# Opcional: la bonificación de 15 puntos del enunciado. No lo tiene el entorno del bimestre,
-# se instala solo si se hace la app. Resuelve limpio contra el resto de este archivo (numpy
-# 2.5.1, pandas 3.0.5, scikit-learn 1.9.0), verificado el 3 de septiembre de 2026 con
-# `uv pip compile`, así que no hay que revalidarlo el 17.
-# streamlit==1.63.0
+# La aplicación interactiva de la bonificación, app/app.py. Resuelve limpio contra el resto
+# de este archivo, verificado al instalarla el 14 de septiembre de 2026.
+streamlit==1.63.0
+joblib==1.5.3           # serializa el pipeline entrenado que carga la aplicación

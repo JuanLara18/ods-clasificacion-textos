@@ -75,11 +75,31 @@ lectura del corpus, está en [`Enunciado.md`](Enunciado.md).
 | 4. Modelo de clasificación | clasificador con búsqueda de hiperparámetros y métricas justificadas | 30% |
 | 5. Textos no vistos | clasificación de al menos cuatro textos de prueba | 10% |
 | 6. Conclusiones | | |
-| *opcional* | *aplicación interactiva en Streamlit* | *+15 puntos* |
+| *opcional* | *aplicación interactiva en Streamlit, en `app/`* | *+15 puntos* |
 
 Correrlo completo toma unos seis minutos, casi todos en la búsqueda de hiperparámetros de la
 sección 4.2. Se guarda **sin salidas** mientras se desarrolla, según [`AGENTS.md`](AGENTS.md);
 solo la corrida final va con todas las celdas ejecutadas, porque el enunciado lo exige.
+
+## La aplicación
+
+Los 15 puntos opcionales del enunciado. Recibe texto libre, lo procesa con el mismo pipeline y
+devuelve el ODS predicho con su probabilidad.
+
+Hace además dos cosas que salen de los hallazgos del proyecto y no del enunciado: **propone
+siempre los dos objetivos más probables**, porque en la evaluación el segundo candidato contiene
+el objetivo correcto en el 58% de los errores; y cuando los dos primeros quedan a menos de 0,10
+de distancia **marca el texto como transversal** en vez de forzarle una etiqueta, que es el caso
+del 6% de los textos y concentra el 31% de los errores.
+
+```bash
+python app/modelo.py          # entrena una vez, unos minutos, y deja el modelo en la caché
+streamlit run app/app.py
+```
+
+El modelo entrenado pesa 37 MB, así que no se versiona ni se guarda en el Drive: vive en la
+caché local, junto a la de las demás herramientas del bimestre. Si la aplicación no lo
+encuentra, lo entrena ella misma la primera vez.
 
 ## Los datos
 
@@ -121,6 +141,9 @@ Proyecto2/
 │   └── Train_textosODS.xlsx      9.656 textos etiquetados con su ODS
 ├── notebooks/
 │   └── Microproyecto_2.ipynb     el entregable, autocontenido
+├── app/
+│   ├── modelo.py                 define, entrena y guarda el pipeline que sirve la aplicación
+│   └── app.py                    la interfaz de Streamlit, los 15 puntos opcionales
 ├── scripts/
 │   ├── perfilar_corpus.py        clases, desbalance, longitudes, casi duplicados
 │   ├── barrer_preparacion.py     cuánto cambia el desempeño con cada decisión de preparación
@@ -146,5 +169,6 @@ Control nuestro, no parte de lo que lee el calificador. Verificado el 14 de sept
 - [x] Se muestran al menos cuatro textos de prueba clasificados, que son seis
 - [x] Se dice que son 16 clases y no 17, y por qué
 - [x] Se declara que el corpus está traducido automáticamente y aumentado
+- [x] La aplicación de Streamlit corre y clasifica texto libre
 - [ ] Revisión cruzada con Miguel
 - [ ] Todas las celdas quedan con su salida visible, que es cosa de la exportación final

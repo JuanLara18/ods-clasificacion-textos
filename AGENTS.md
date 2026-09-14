@@ -42,8 +42,13 @@ Medido con `scripts/perfilar_corpus.py`, no supuesto:
 - **El método, entero, en el notebook.** `notebooks/Microproyecto_2.ipynb` es autocontenido y no
   importa nada nuestro. El calificador recibe dos archivos y no este repositorio, así que un
   notebook que importe de `src/` no corre para nadie más.
-- **Lo que no es el método, en `scripts/`.** Perfilar el corpus y exportar la entrega. Los
-  scripts no importan del notebook ni el notebook de ellos.
+- **Lo que no es el método, en `scripts/`.** Perfilar el corpus, medir la preparación y
+  exportar la entrega. Los scripts no importan del notebook ni el notebook de ellos.
+- **La aplicación de la bonificación, en `app/`.** `modelo.py` define, entrena y guarda el
+  pipeline; `app.py` es la interfaz de Streamlit. El pipeline queda definido ahí y otra vez en
+  el notebook, a propósito, por la misma razón de siempre: el notebook tiene que correr solo.
+  El modelo entrenado pesa 37 MB y vive en la caché local, **fuera del Drive y fuera del
+  repositorio**; se regenera con `python app/modelo.py`.
 - **Decisiones: parámetros de los estimadores, no un diccionario de configuración.** Cada
   parámetro vive donde se usa, con su valor por defecto, y se argumenta en la sección donde
   aparece. Si aparece un número discutible, su argumento va a `docs/decisiones.md`.
