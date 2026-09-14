@@ -80,8 +80,8 @@ Medido con `scripts/perfilar_corpus.py`, no supuesto:
 
 ## Nunca
 
-- Crear un venv, `__pycache__` o archivos `.pyc` dentro del Drive. El entorno del bimestre vive
-  en `C:\Users\LaraJ\Envs\miad-2026-14`.
+- Crear un venv, `__pycache__` o archivos `.pyc` dentro del Drive. El entorno del bimestre
+  vive fuera de él, en `%USERPROFILE%\Envs\miad-2026-14`.
 - Versionar `entrega/`: es copia derivada del notebook y se regenera con
   `scripts/exportar_entrega.py`.
 - Versionar el enunciado en PDF, los PDF de `docs/` ni `docs/plan.md`. El primero es material

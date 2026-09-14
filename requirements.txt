@@ -1,7 +1,7 @@
 # Micro proyecto 2: clasificación de textos según los ODS
 #
 # Versiones congeladas del entorno del bimestre 2026-14, que vive fuera del Drive:
-#   C:\Users\LaraJ\Envs\miad-2026-14   (kernel "MIAD 2026-14 (Python 3.12)")
+#   %USERPROFILE%\Envs\miad-2026-14   (kernel "MIAD 2026-14 (Python 3.12)")
 #
 # Para montar un entorno solo para este proyecto:
 #   uv venv .venv --python 3.12
