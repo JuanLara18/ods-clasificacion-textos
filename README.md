@@ -86,11 +86,14 @@ solo la corrida final va con todas las celdas ejecutadas, porque el enunciado lo
 Los 15 puntos opcionales del enunciado. Recibe texto libre, lo procesa con el mismo pipeline y
 devuelve el ODS predicho con su probabilidad.
 
-Hace además dos cosas que salen de los hallazgos del proyecto y no del enunciado: **propone
-siempre los dos objetivos más probables**, porque en la evaluación el segundo candidato contiene
-el objetivo correcto en el 58% de los errores; y cuando los dos primeros quedan a menos de 0,10
-de distancia **marca el texto como transversal** en vez de forzarle una etiqueta, que es el caso
-del 6% de los textos y concentra el 31% de los errores.
+Hace además dos cosas que salen de los hallazgos del proyecto y no del enunciado. **Propone un
+segundo objetivo cuando es plausible**, porque en la evaluación el segundo candidato contiene el
+objetivo correcto en el 58% de los errores; y cuando los dos primeros quedan a menos de 0,10 de
+distancia **marca el texto como transversal** en vez de forzarle una etiqueta, que es el caso del
+6% de los textos y donde se concentra el 31% de los errores.
+
+Cuando el modelo está seguro, en cambio, no ofrece nada más: un segundo objetivo al 0,4% no es
+información, es ruido que resta credibilidad a la respuesta.
 
 ```bash
 python app/modelo.py          # entrena una vez, unos minutos, y deja el modelo en la caché
