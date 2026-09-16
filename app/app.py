@@ -54,12 +54,12 @@ def poner_ejemplo() -> None:
 def barra_lateral() -> None:
     with st.sidebar:
         st.subheader("El modelo")
-        st.write("TF-IDF, SVD truncada a 500 componentes y regresión logística.")
+        st.write("TF-IDF, SVD truncada a 1.000 componentes y regresión logística.")
 
         exactitud, f1, top2 = st.columns(3)
-        exactitud.metric("Exactitud", "0,876")
-        f1.metric("F1 macro", "0,848")
-        top2.metric("Top 2", "0,948")
+        exactitud.metric("Exactitud", "0,885")
+        f1.metric("F1 macro", "0,859")
+        top2.metric("Top 2", "0,959")
         st.caption("Medido sobre 1.932 textos no vistos. El modelo que responde aquí se "
                    "entrenó después con el corpus completo.")
 
@@ -138,7 +138,16 @@ def main() -> None:
             "modelo aprendió de párrafos de unas 105."
         )
 
-    mostrar_resultado(texto, obtener_modelo())
+    modelo = obtener_modelo()
+
+    # Sin ningún término del vocabulario el TF-IDF queda vacío y el modelo respondería solo con
+    # sus sesgos: se avisa en vez de clasificar.
+    if modelo.named_steps["tfidf"].transform([texto]).nnz == 0:
+        st.error("El texto no contiene ninguna palabra del vocabulario del modelo, así que no hay "
+                 "base para clasificarlo. El modelo trabaja con párrafos en español.")
+        return
+
+    mostrar_resultado(texto, modelo)
 
 
 main()

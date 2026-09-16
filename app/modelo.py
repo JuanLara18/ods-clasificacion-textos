@@ -3,7 +3,7 @@
 
     python app/modelo.py        # entrena sobre el corpus completo y lo deja en la caché
 
-Entrenar toma unos minutos y el archivo resultante pesa unos 37 MB, así que no se versiona ni
+Entrenar toma unos minutos y el archivo resultante pesa unos 73 MB, así que no se versiona ni
 se guarda en el Drive: queda en la caché local, junto a la de las demás herramientas del
 bimestre. La aplicación lo carga en menos de un segundo, y si no lo encuentra lo entrena ella
 misma la primera vez.
@@ -11,7 +11,7 @@ misma la primera vez.
 El pipeline está definido aquí y otra vez en el notebook, a propósito. El notebook es el
 entregable y tiene que ser autocontenido, sin importar nada de este repositorio, porque el
 calificador recibe dos archivos y no la carpeta. Los valores son los que cerró la búsqueda de
-hiperparámetros: 500 componentes y C = 3.
+hiperparámetros: 1.000 componentes y C = 3.
 """
 
 from __future__ import annotations
@@ -33,9 +33,9 @@ RAIZ = Path(__file__).resolve().parent.parent
 CORPUS = RAIZ / "data" / "Train_textosODS.xlsx"
 SEMILLA = 42
 
-# El modelo entrenado pesa 37 MB y se regenera en un par de minutos, así que vive FUERA del
+# El modelo entrenado pesa 73 MB y se regenera en un par de minutos, así que vive FUERA del
 # Drive, junto a la caché de las demás herramientas del bimestre. Meterlo en el repositorio
-# obligaría a sincronizar 37 MB cada vez que se reentrena.
+# obligaría a sincronizar 73 MB cada vez que se reentrena.
 CACHE = Path(os.environ.get("LOCALAPPDATA", tempfile.gettempdir())) / "maia-tools" / "ods"
 MODELO = CACHE / "modelo.joblib"
 
@@ -97,7 +97,7 @@ def construir() -> Pipeline:
             min_df=5,
             sublinear_tf=True,
         )),
-        ("svd", TruncatedSVD(n_components=500, random_state=SEMILLA)),
+        ("svd", TruncatedSVD(n_components=1000, random_state=SEMILLA)),
         ("norm", Normalizer()),
         ("clf", LogisticRegression(C=3, max_iter=2000, random_state=SEMILLA)),
     ])
