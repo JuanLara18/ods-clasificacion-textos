@@ -15,22 +15,25 @@ Sobre los 1.932 textos que el modelo nunca vio:
 
 | Exactitud | F1 macro | Exactitud top-2 |
 |---|---|---|
-| **0,8758** | **0,8478** | **0,9482** |
+| **0,8851** | **0,8595** | **0,9586** |
 
 Cuatro hallazgos explican por qué el método es el que es. Los cuatro están medidos en el
 notebook y argumentados en [`docs/decisiones.md`](docs/decisiones.md).
 
 1. **Veinte componentes no bastan.** El rango que sugiere el enunciado da 0,755 de F1 macro
-   contra 0,850 sin reducir, y hacen falta quinientas para empatar. De ahí que haya dos
-   descomposiciones y no una.
-2. **La SVD no mejora el desempeño, lo iguala.** Se justifica por lo que habilita, un modelo
-   dieciséis veces más pequeño y unas componentes interpretables, no por una mejora que no
-   existe.
+   contra 0,850 sin reducir, con el mismo clasificador sin ajustar. Con la regularización
+   ajustada, la búsqueda escoge mil componentes por la regla de una desviación. De ahí que haya
+   dos descomposiciones y no una.
+2. **La SVD no mejora el desempeño ni achica el modelo.** Con la regularización ajustada, no
+   reducir da 0,864 de F1 macro y el modelo elegido 0,856, y la matriz de la SVD hace al modelo
+   unas sesenta veces más grande. Se justifica porque el enunciado la exige y por lo que
+   habilita, unas componentes interpretables y un espacio denso donde comparar algoritmos, no
+   por una mejora que no existe.
 3. **Ninguna decisión de preparación del texto importa.** Todas las configuraciones medidas
    caben en menos de una centésima de F1 macro, por debajo del ruido entre particiones, así que
    se escogieron por el tamaño del vocabulario.
-4. **Los errores son dudas, no disparates.** De los 240 errores, en 140 el ODS correcto quedó
-   segundo, y la confianza media cae de 0,872 cuando acierta a 0,532 cuando falla. Las
+4. **Los errores son dudas, no disparates.** De los 222 errores, en 142 el ODS correcto quedó
+   segundo, y la confianza media cae de 0,853 cuando acierta a 0,510 cuando falla. Las
    confusiones se concentran entre objetivos que la propia Agenda 2030 agrupa.
 
 ## El método
@@ -41,7 +44,7 @@ flowchart TB
   subgraph P["Pipeline de scikit-learn"]
     direction TB
     N["normalizar<br/>minúsculas, tildes, palabras vacías"] --> V["TfidfVectorizer<br/>8.353 términos"]
-    V --> S["TruncatedSVD<br/>500 componentes"]
+    V --> S["TruncatedSVD<br/>1.000 componentes"]
     S --> R["Normalizer<br/>norma L2 de las filas"]
     R --> C["regresión logística<br/>C = 3"]
   end
@@ -52,7 +55,7 @@ flowchart TB
 
 **Son dos descomposiciones, y esa es la decisión de fondo.** Veinte componentes producen tópicos
 legibles pero no separan dieciséis clases, así que la interpretación usa veinte y el clasificador
-quinientas. El enunciado lo autoriza de forma explícita: su actividad 3 permite reutilizar la
+mil. El enunciado lo autoriza de forma explícita: su actividad 3 permite reutilizar la
 descomposición de la actividad 2 o aplicar otra reducción que se considere pertinente.
 
 Antes de escribir el método medimos qué tipo de problema es este, y el resultado cambia lo que
@@ -75,11 +78,14 @@ lectura del corpus, está en [`Enunciado.md`](Enunciado.md).
 | 4. Modelo de clasificación | clasificador con búsqueda de hiperparámetros y métricas justificadas | 30% |
 | 5. Textos no vistos | clasificación de al menos cuatro textos de prueba | 10% |
 | 6. Conclusiones | | |
+| 7. Anexo | la aplicación interactiva, con sus capturas | |
 | *opcional* | *aplicación interactiva en Streamlit, en `app/`* | *+15 puntos* |
 
-Correrlo completo toma unos seis minutos, casi todos en la búsqueda de hiperparámetros de la
-sección 4.2. Se guarda **sin salidas** mientras se desarrolla, según [`AGENTS.md`](AGENTS.md);
-solo la corrida final va con todas las celdas ejecutadas, porque el enunciado lo exige.
+Correrlo completo toma varios minutos, casi todos en la comparación de algoritmos de la sección
+4.1 y en la búsqueda de hiperparámetros de la sección 4.2, que prueba descomposiciones de hasta
+2.000 componentes. Se guarda **sin salidas** mientras se desarrolla, según
+[`AGENTS.md`](AGENTS.md); solo la corrida final va con todas las celdas ejecutadas, porque el
+enunciado lo exige.
 
 ## La aplicación
 
@@ -88,9 +94,10 @@ devuelve el ODS predicho con su probabilidad.
 
 Hace además dos cosas que salen de los hallazgos del proyecto y no del enunciado. **Propone un
 segundo objetivo cuando es plausible**, porque en la evaluación el segundo candidato contiene el
-objetivo correcto en el 58% de los errores; y cuando los dos primeros quedan a menos de 0,10 de
+objetivo correcto en el 64% de los errores; y cuando los dos primeros quedan a menos de 0,10 de
 distancia **marca el texto como transversal** en vez de forzarle una etiqueta, que es el caso del
-6% de los textos y donde se concentra el 31% de los errores.
+6,5% de los textos y donde se concentra el 33% de los errores. Tampoco clasifica un texto sin
+ningún término del vocabulario: avisa en vez de responder sin base.
 
 Cuando el modelo está seguro, en cambio, no ofrece nada más: un segundo objetivo al 0,4% no es
 información, es ruido que resta credibilidad a la respuesta.
@@ -100,7 +107,7 @@ python app/modelo.py          # entrena una vez, unos minutos, y deja el modelo 
 streamlit run app/app.py
 ```
 
-El modelo entrenado pesa 37 MB, así que no se versiona ni se guarda en el Drive: vive en la
+El modelo entrenado pesa 73 MB, así que no se versiona ni se guarda en el Drive: vive en la
 caché local, junto a la de las demás herramientas del bimestre. Si la aplicación no lo
 encuentra, lo entrena ella misma la primera vez.
 
@@ -162,7 +169,8 @@ es fácil perder de ella. Y con eso, el notebook.
 
 ## Antes de entregar
 
-Control nuestro, no parte de lo que lee el calificador. Verificado el 14 de septiembre de 2026.
+Control nuestro, no parte de lo que lee el calificador. Verificado el 14 de septiembre de 2026 y
+revisado el 15, tras la revisión cruzada.
 
 - [x] El notebook corre de punta a punta, en orden, sin errores
 - [x] Cada decisión tiene su justificación escrita al lado, no solo el código
@@ -173,5 +181,7 @@ Control nuestro, no parte de lo que lee el calificador. Verificado el 14 de sept
 - [x] Se dice que son 16 clases y no 17, y por qué
 - [x] Se declara que el corpus está traducido automáticamente y aumentado
 - [x] La aplicación de Streamlit corre y clasifica texto libre
-- [ ] Revisión cruzada con Miguel
+- [x] Revisión cruzada con Miguel
+- [ ] El notebook revisado corre de punta a punta en el entorno del bimestre, con la rejilla completa
+- [ ] Las capturas de la aplicación están pegadas en el anexo 7 del notebook
 - [ ] Todas las celdas quedan con su salida visible, que es cosa de la exportación final

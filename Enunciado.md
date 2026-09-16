@@ -176,7 +176,9 @@ lado y lado de la partición, que inflarían el desempeño. Medido: sobre una mu
 documentos no hay **ningún** par con similitud coseno TF-IDF mayor o igual a 0,9 dentro de una
 misma clase. La aumentación reescribió de verdad, no copió. Aun así conviene rehacer la
 medición sobre el corpus completo antes de la entrega, y en todo caso la partición va
-estratificada por clase.
+estratificada por clase. **Rehecha el 15 de septiembre de 2026** en la sección 5 del notebook,
+entre la partición de prueba y la de entrenamiento completas: ningún texto de prueba llega a 0,9
+de similitud con uno de entrenamiento, y solo dos pasan de 0,8.
 
 ## Relación con el material del curso
 
