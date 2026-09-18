@@ -81,9 +81,10 @@ lectura del corpus, está en [`Enunciado.md`](Enunciado.md).
 | 7. Anexo | la aplicación interactiva, con sus capturas | |
 | *opcional* | *aplicación interactiva en Streamlit, en `app/`* | *+15 puntos* |
 
-Correrlo completo toma varios minutos, casi todos en la comparación de algoritmos de la sección
-4.1 y en la búsqueda de hiperparámetros de la sección 4.2, que prueba descomposiciones de hasta
-2.000 componentes. Se guarda **sin salidas** mientras se desarrolla, según
+Correrlo completo toma unos trece minutos en el entorno del bimestre, repartidos sobre todo
+entre el ajuste del bloque de preparación de la sección 2.3, la curva de la sección 3.2 y la
+búsqueda de hiperparámetros de la sección 4.2, que prueba descomposiciones de hasta 2.000
+componentes. Se guarda **sin salidas** mientras se desarrolla, según
 [`AGENTS.md`](AGENTS.md); solo la corrida final va con todas las celdas ejecutadas, porque el
 enunciado lo exige.
 
@@ -169,8 +170,8 @@ es fácil perder de ella. Y con eso, el notebook.
 
 ## Antes de entregar
 
-Control nuestro, no parte de lo que lee el calificador. Verificado el 14 de septiembre de 2026 y
-revisado el 15, tras la revisión cruzada.
+Control nuestro, no parte de lo que lee el calificador. Verificado el 14 de septiembre de 2026,
+revisado el 15 tras la revisión cruzada y corrido entero el 18.
 
 - [x] El notebook corre de punta a punta, en orden, sin errores
 - [x] Cada decisión tiene su justificación escrita al lado, no solo el código
@@ -182,6 +183,6 @@ revisado el 15, tras la revisión cruzada.
 - [x] Se declara que el corpus está traducido automáticamente y aumentado
 - [x] La aplicación de Streamlit corre y clasifica texto libre
 - [x] Revisión cruzada con Miguel
-- [ ] El notebook revisado corre de punta a punta en el entorno del bimestre, con la rejilla completa
-- [ ] Las capturas de la aplicación están pegadas en el anexo 7 del notebook
-- [ ] Todas las celdas quedan con su salida visible, que es cosa de la exportación final
+- [x] El notebook revisado corre de punta a punta, con la rejilla completa
+- [x] Las capturas de la aplicación están pegadas en el anexo 7 del notebook
+- [x] Todas las celdas quedan con su salida visible

@@ -155,9 +155,9 @@ ajustada en los dos lados, la línea base sin reducir alcanza 0,8640 y el modelo
 **Tampoco achica el modelo**: la matriz de la SVD guarda 8.353.000 números, contra los 133.664
 de la regresión logística sobre TF-IDF, así que el modelo reducido es unas sesenta veces más
 grande. Lo que aporta es otra cosa: una representación densa que admite algoritmos que no
-toleran matrices dispersas, y las componentes interpretables de la decisión 3. Se justifica por lo que
-habilita y porque el enunciado la exige, no por lo que mejora, y presentarla como mejora sería
-falsear el resultado.
+toleran matrices dispersas, y las componentes interpretables de la decisión 3. Se justifica
+por lo que habilita y porque el enunciado la exige, no por lo que mejora, y presentarla como
+mejora sería falsear el resultado.
 
 ## 5. Cómo se reporta el desempeño
 
@@ -188,6 +188,24 @@ de todos los errores. Las cifras de la investigación previa se sostienen fuera 
 con que se hallaron.
 
 ## Bitácora
+
+**18 de septiembre de 2026.** El notebook se corrió entero en el entorno del bimestre, con la
+rejilla completa y sin recortar ninguna sección, y **las cifras de la revisión del 15 se
+reproducen una por una**: la línea base en 0,8497, la curva de la sección 3.2, los seis
+algoritmos de la 4.1, los cuatro números de componentes de la 4.2 con su desviación, la
+comprobación de casi duplicados y las métricas de prueba. No hubo que corregir ningún número.
+Trece minutos de punta a punta, repartidos entre el ajuste del bloque de preparación de la
+sección 2.3, la curva de la 3.2 y la búsqueda de la 4.2, y con los trabajadores limitados a tres
+porque una descomposición de 2.000 componentes ocupa cerca de un gigabyte por trabajador.
+
+De paso quedó explicado por qué `max_iter` no cambió nada: sobre el corpus completo lbfgs
+converge en 55 iteraciones, muy lejos de las 2.000 que permite el pipeline.
+
+El modelo de la aplicación se reentrenó con los hiperparámetros nuevos, 110 segundos y 73 MB, y
+se corrigió un defecto de la barra lateral. Las tres métricas iban en fila dentro de una barra de
+ancho fijo, así que Streamlit las recortaba y se leían como "0,...". Ahora van una debajo de
+otra. Con eso se tomaron las tres capturas del anexo 7, que quedan pegadas dentro del notebook
+como adjuntos, no como archivos aparte, porque el calificador recibe solo el notebook.
 
 **15 de septiembre de 2026.** Revisión cruzada del notebook. Tres afirmaciones no se sostenían y
 se corrigieron. La primera, que el modelo reducido fuera dieciséis veces más pequeño: la matriz
