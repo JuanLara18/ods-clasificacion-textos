@@ -152,10 +152,10 @@ encarga de que las pequeñas cuenten igual.
 **Sobre la reducción de la dimensionalidad, con todas sus letras.** Con la regularización
 ajustada en los dos lados, la línea base sin reducir alcanza 0,8640 y el modelo elegido 0,8556:
 **la SVD no mejora el desempeño**, cuesta ocho milésimas con mil componentes y tres con dos mil.
-**Tampoco achica el modelo**: la matriz de la SVD guarda 8.353.000 números, contra los 133.664 de
-la regresión logística sobre TF-IDF, así que el modelo reducido es unas sesenta veces más grande.
-Lo que aporta es otra cosa: una representación densa que admite algoritmos que no toleran
-matrices dispersas, y las componentes interpretables de la decisión 3. Se justifica por lo que
+**Tampoco achica el modelo**: la matriz de la SVD guarda 8.353.000 números, contra los 133.664
+de la regresión logística sobre TF-IDF, así que el modelo reducido es unas sesenta veces más
+grande. Lo que aporta es otra cosa: una representación densa que admite algoritmos que no
+toleran matrices dispersas, y las componentes interpretables de la decisión 3. Se justifica por lo que
 habilita y porque el enunciado la exige, no por lo que mejora, y presentarla como mejora sería
 falsear el resultado.
 
@@ -183,9 +183,9 @@ sección 5.1 del notebook y en las conclusiones, no tres veces.
 1.932 textos de prueba, con el modelo revisado el 15 de septiembre: de los 222 errores, en 142 el
 ODS correcto quedó segundo, el 64%; la exactitud sube de 0,8851 en top-1 a **0,9586 en top-2**;
 la confianza media es de 0,853 cuando acierta y 0,510 cuando falla; y los 126 textos con margen
-menor que 0,10 entre el primer y el segundo objetivo, el 6,5% del conjunto, concentran el 33% de
-todos los errores. Las cifras de la
-investigación previa se sostienen fuera de la muestra con que se hallaron.
+menor que 0,10 entre el primer y el segundo objetivo, el 6,5% del conjunto, concentran el 33%
+de todos los errores. Las cifras de la investigación previa se sostienen fuera de la muestra
+con que se hallaron.
 
 ## Bitácora
 
