@@ -47,7 +47,7 @@ Medido con `scripts/perfilar_corpus.py`, no supuesto:
 - **La aplicación de la bonificación, en `app/`.** `modelo.py` define, entrena y guarda el
   pipeline; `app.py` es la interfaz de Streamlit. El pipeline queda definido ahí y otra vez en
   el notebook, a propósito, por la misma razón de siempre: el notebook tiene que correr solo.
-  El modelo entrenado pesa 37 MB y vive en la caché local, **fuera del Drive y fuera del
+  El modelo entrenado pesa 73 MB y vive en la caché local, **fuera del Drive y fuera del
   repositorio**; se regenera con `python app/modelo.py`.
 - **Decisiones: parámetros de los estimadores, no un diccionario de configuración.** Cada
   parámetro vive donde se usa, con su valor por defecto, y se argumenta en la sección donde
