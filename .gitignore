@@ -7,7 +7,6 @@ venv/
 .ipynb_checkpoints/
 .DS_Store
 *.log
-.claude/
 
 # Copias derivadas del notebook, se regeneran con scripts/exportar_entrega.py
 entrega/

@@ -84,9 +84,8 @@ lectura del corpus, está en [`Enunciado.md`](Enunciado.md).
 Correrlo completo toma unos trece minutos en el entorno del bimestre, repartidos sobre todo
 entre el ajuste del bloque de preparación de la sección 2.3, la curva de la sección 3.2 y la
 búsqueda de hiperparámetros de la sección 4.2, que prueba descomposiciones de hasta 2.000
-componentes. Se guarda **sin salidas** mientras se desarrolla, según
-[`AGENTS.md`](AGENTS.md); solo la corrida final va con todas las celdas ejecutadas, porque el
-enunciado lo exige.
+componentes. Mientras se desarrolla se guarda **sin salidas**, y solo la corrida final va con
+todas las celdas ejecutadas, porque el enunciado lo exige.
 
 ## La aplicación
 
@@ -144,7 +143,6 @@ El entorno del bimestre ya tiene todo lo necesario. Para montar uno propio, `uv 
 ```
 Proyecto2/
 ├── Enunciado.md                  el enunciado del curso, con las notas de lectura del corpus
-├── AGENTS.md                     cómo se trabaja aquí, humano o agente
 ├── docs/
 │   ├── estrategia.md             la investigación previa: qué tipo de problema es este
 │   └── decisiones.md             las cinco decisiones del método, con su argumento y su cierre

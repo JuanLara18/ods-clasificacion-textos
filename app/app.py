@@ -11,8 +11,8 @@ varios objetivos, y eso es lo que el proyecto encontró que la etiqueta única e
 import sys
 from pathlib import Path
 
-# El repositorio vive en el Drive y ahí no se escriben .pyc, según AGENTS.md. Hay que fijarlo
-# antes de importar modelo.py, que es lo único nuestro que se importa.
+# El repositorio vive en el Drive y ahí no se escriben .pyc. Hay que fijarlo antes de importar
+# modelo.py, que es lo único nuestro que se importa.
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 

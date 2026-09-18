@@ -300,8 +300,9 @@ desempeño más allá del ruido entre particiones**, así que la preparación se
 del vocabulario y no por el F1. Eso ahorra discusión y acorta el notebook, que es lo que se
 buscaba después de que el micro 1 quedó en 93 celdas y 12.400 palabras.
 
-De paso se quitaron del notebook las cinco referencias a `docs/` y a rutas de este repositorio,
-que la regla 7 de `AGENTS.md` prohíbe porque el calificador recibe dos archivos y no la carpeta.
+De paso se quitaron del notebook las cinco referencias a `docs/` y a rutas de este repositorio:
+el calificador recibe dos archivos y no la carpeta, así que el notebook no puede nombrar nada
+que no viaje con él.
 
 **31 de agosto de 2026, tarde.** Investigación previa al método, en
 [`estrategia.md`](estrategia.md). Tres hallazgos: la línea base TF-IDF más logística ya da 0,8886
