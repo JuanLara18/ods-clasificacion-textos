@@ -90,7 +90,8 @@ todas las celdas ejecutadas, porque el enunciado lo exige.
 ## La aplicación
 
 Los 15 puntos opcionales del enunciado. Recibe texto libre, lo procesa con el mismo pipeline y
-devuelve el ODS predicho con su probabilidad.
+devuelve el ODS predicho con su probabilidad. Está desplegada en
+<https://ods-clasificacion-textos.streamlit.app/>.
 
 Hace además dos cosas que salen de los hallazgos del proyecto y no del enunciado. **Propone un
 segundo objetivo cuando es plausible**, porque en la evaluación el segundo candidato contiene el
@@ -109,7 +110,9 @@ streamlit run app/app.py
 
 El modelo entrenado pesa 73 MB, así que no se versiona ni se guarda en el Drive: vive en la
 caché local, junto a la de las demás herramientas del bimestre. Si la aplicación no lo
-encuentra, lo entrena ella misma la primera vez.
+encuentra, lo entrena ella misma la primera vez, y eso vale también para el despliegue: tras
+un rato sin visitas el servicio se duerme, y al despertar la primera clasificación tarda un
+par de minutos porque vuelve a entrenar.
 
 ## Los datos
 
