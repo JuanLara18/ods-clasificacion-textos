@@ -56,10 +56,11 @@ def barra_lateral() -> None:
         st.subheader("El modelo")
         st.write("TF-IDF, SVD truncada a 1.000 componentes y regresión logística.")
 
-        exactitud, f1, top2 = st.columns(3)
-        exactitud.metric("Exactitud", "0,885")
-        f1.metric("F1 macro", "0,859")
-        top2.metric("Top 2", "0,959")
+        # Las tres en fila no caben: la barra lateral tiene ancho fijo y st.metric recorta
+        # el valor a "0,...". Van una debajo de otra, que es lo que sí se lee.
+        for etiqueta, valor in [("Exactitud", "0,885"), ("F1 macro", "0,859"),
+                                ("Top 2", "0,959")]:
+            st.metric(etiqueta, valor)
         st.caption("Medido sobre 1.932 textos no vistos. El modelo que responde aquí se "
                    "entrenó después con el corpus completo.")
 
